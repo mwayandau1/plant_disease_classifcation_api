@@ -43,12 +43,9 @@ def predict():
         top_index = probs.top1  # Get index of the top prediction
         top_confidence = probs.top1conf  # Get confidence score of the top prediction
 
-        # Get the predicted class name and format it by replacing underscores with spaces
-        top_label = names[int(top_index)].replace('___', ' ').replace('__', ' ').replace('_', ' ').title()
-
         # Form the top prediction result
         top_prediction = {
-            'label': top_label,
+            'label': names[int(top_index)],
             'confidence': float(top_confidence)
         }
         return jsonify({'prediction': top_prediction}), 200

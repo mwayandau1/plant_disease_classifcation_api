@@ -10,7 +10,7 @@ app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
 
 # Load YOLOv8 model
-model = YOLO("trained_yolov8_model_retrained.pt")  # load a custom model
+model = YOLO("trained_30.pt")  # load a custom model
 
 @app.route("/", methods=["GET"])
 def sayHello():
@@ -43,9 +43,12 @@ def predict():
         top_index = probs.top1  # Get index of the top prediction
         top_confidence = probs.top1conf  # Get confidence score of the top prediction
 
+        # Get the predicted class name and format it by replacing underscores with spaces
+        top_label = names[int(top_index)].replace('___', ' ').replace('__', ' ').replace('_', ' ').title()
+
         # Form the top prediction result
         top_prediction = {
-            'label': names[int(top_index)],
+            'label': top_label,
             'confidence': float(top_confidence)
         }
         return jsonify({'prediction': top_prediction}), 200

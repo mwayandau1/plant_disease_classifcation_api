@@ -18,6 +18,9 @@ def sayHello():
 
 @app.route('/predict', methods=['POST'])
 def predict():
+""" 
+Rest api that returns the prediction output to user
+"""
     if 'file' not in request.files:
         return jsonify({'error': 'No file provided'}), 400
 
